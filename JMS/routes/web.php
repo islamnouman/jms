@@ -1,5 +1,11 @@
 <?php
 
+
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\TaskController;
+//use App\Http\Controllers\TaskDiscussionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +22,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+});
+
+
+Route::resource('job', JobController::class)
+    ->middleware(['auth']);
+
+Route::resource('task', TaskController::class)
+    ->middleware(['auth']);
+
+
+
+
+Route::resource('comments', CommentsController::class)
+    ->middleware(['auth']);
+
+
+
+require __DIR__.'/auth.php';

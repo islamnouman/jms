@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Task') }}
+            {{ __('Discussion') }}
         </h2>
     </x-slot>
 
@@ -10,16 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-{{--                    <a href="{{route('job.create')}}" >
-                        <div class="flex items-center justify-center mb-6">
-                            <button class="bg-gray-100 hover:bg-gray-300 text-black-800 font-bold py-1.5 px-4 rounded inline-flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>Create A Job</span>
-                            </button>
-                        </div>
-                    </a>--}}
+
 
 
                     @if ($errors->any())
@@ -32,7 +23,6 @@
                             </ul>
                         </div><br />
                     @endif
-{{--
 
                     @if(session()->get('completed'))
                         <div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">
@@ -41,9 +31,6 @@
                         </div><br />
                     @endif
 
-
-
---}}
 
 
 
@@ -66,14 +53,12 @@
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Task
                                             </th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Action
-                                            </th>
+
 
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach($mytasks as $mytask)
+                                        @foreach($task as $mytask)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
@@ -96,28 +81,73 @@
                                                     {{$mytask->t_description}}
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{ route('comments.index', $mytask->t_id)}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-indigo-800">
-                                                    Discussion
-                                                </a>
 
-                                               {{-- <a href="{{ route('job.edit', Crypt::encrypt(Crypt::encrypt($job->id)))}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                  Edit
-                                                </a>
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-50 text-red-800">
-                                                  <form action="{{ route('job.destroy', crypt::encrypt(Crypt::encrypt($job->id)))}}" method="post" >
-                                                      @csrf
-                                                      @method('DELETE')
-                                                        <button class="btn" type="submit">Delete</button>
-                                                  </form>
-                                                </span>--}}
-
-                                            </td>
 
                                         </tr>
 
 
                                         @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Comments
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach($comments as $comments)
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        <div class="ml-4">
+                                                            <div class="text-left  font-extrabold text-lg	">
+                                                                @ {{$comments->c_u_n}} says;
+                                                            </div>
+                                                            <div class="text-md-left text-gray-900 text-base">
+                                                                {{$comments->comment}}
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td class="px-8 py-6 whitespace-nowrap">
+                                                <div class="flex flex-wrap content-start">
+                                                    <div class="ml-4 w-full">
+                                                        <form method="POST" action="{{ route('comments.store') }}">
+                                                        @csrf
+
+                                                            <!-- Comment Description -->
+                                                            <div class="float-left w-full"	>
+                                                                <x-label for="comment" :value="__('Write a comment')" />
+
+                                                                <x-input id="comment" class="block mt-1 w-full" type="text" name="comment"  required />
+                                                                @foreach($task as $mytask)
+                                                                    <x-input type="hidden" name="t_id" value="{{$mytask->t_id}}" />
+                                                                @endforeach
+                                                                <x-input type="hidden" name="c_u_id" value="{{Auth::user()->id}}" />
+
+                                                            </div>
+
+
+                                                            <div class=" items-center mt-4 float-right"  >
+                                                                <x-button class="ml-3">
+                                                                    {{ __('Save comment') }}
+                                                                </x-button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

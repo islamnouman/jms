@@ -78,7 +78,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <div class="ml-4">
-                                                        <div class="text-md-left font-medium text-gray-900">
+                                                        <div class="text-center font-medium text-gray-900 bg-green-50">
                                                             {{$mytask->j_title}}
                                                         </div>
                                                         <div class="text-md-left font-medium text-gray-900">
@@ -89,16 +89,16 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">
+                                                <div class="text-center font-medium text-gray-900 bg-green-50 ">
                                                     {{$mytask->t_title}}
                                                 </div>
-                                                <div class="text-sm font-medium text-gray-900">
+                                                <div class="text-md-left font-medium text-gray-900">
                                                     {{$mytask->t_description}}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{ route('#', $mytask->id)}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-indigo-800">
-                                                    Task
+                                                <a href="{{ route('comments.index', $mytask->t_id)}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-indigo-800">
+                                                    Discussion
                                                 </a>
 
                                                {{-- <a href="{{ route('job.edit', Crypt::encrypt(Crypt::encrypt($job->id)))}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">

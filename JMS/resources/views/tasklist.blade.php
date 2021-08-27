@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Jobs') }}
+            {{ __('Jobs -> Tasks') }}
         </h2>
     </x-slot>
 
@@ -10,13 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-                    <a href="{{route('job.create')}}" >
+                    <a href="{{route('task.create',Crypt::encrypt(Crypt::encrypt($parent_job_id)) )}}" >
                         <div class="flex items-center justify-center mb-6">
                             <button class="bg-gray-100 hover:bg-gray-300 text-black-800 font-bold py-1.5 px-4 rounded inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span>Create A Job</span>
+                                <span>Create A Task</span>
                             </button>
                         </div>
                     </a>
@@ -39,6 +39,19 @@
                             <p>{{ session()->get('completed') }}</p>
                         </div><br />
                     @endif
+
+
+                    <a href="{{ route("job.index") }}" >
+                        <div class="flex items-center justify-start mb-6">
+                            <button class="bg-gray-100 hover:bg-gray-300 text-black-800 font-bold py-1.5 px-4 rounded inline-flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                                </svg>
+                                <span>Go To Jobs</span>
+                            </button>
+                        </div>
+                    </a>
+
 
 
 
@@ -71,32 +84,31 @@
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach($jobs as $job)
+                                        @foreach($tasks as $task)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
                                                     <div class="ml-4">
                                                         <div class="text-md-left font-medium text-gray-900">
-                                                            {{$job->j_title}}
+                                                            {{$task->t_title}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
-                                                    {{$job->j_description}}
+                                                    {{$task->t_description}}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <a href="{{ url('#')}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-indigo-800">
-                                                    Task
+                                                <a href="{{ route('comments.index', $task->id)}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-indigo-800">
+                                                    Discussion
                                                 </a>
-                                                &nbsp;
-                                                <a href="{{ route('job.edit', Crypt::encrypt(Crypt::encrypt($job->id)))}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                <a href="{{ route('task.edit', Crypt::encrypt(Crypt::encrypt($task->id)))}}" class=" text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                   Edit
                                                 </a>
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-50 text-red-800">
-                                                  <form action="{{ route('job.destroy', crypt::encrypt(Crypt::encrypt($job->id)))}}" method="post" >
+                                                  <form action="{{ route('task.destroy', crypt::encrypt(Crypt::encrypt($task->id)))}}" method="post" >
                                                       @csrf
                                                       @method('DELETE')
                                                         <button class="btn" type="submit">Delete</button>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Update Job') }}
+            {{ __('Update Task') }}
         </h2>
     </x-slot>
 
@@ -21,29 +21,48 @@
                                         </div>
                                     </a>
 
-                                    <form method="POST" action="{{ route('job.update',$job_with_id->id ) }}">
+                                    <form method="POST" action="{{ route('task.update',$tasks->id ) }}">
                                     @csrf
                                         <x-input  type="hidden" name="_method" value="put" />
 
-                                    <!-- Jobs Title -->
+                                        <!-- Task Title -->
                                         <div>
                                             <x-label for="title" :value="__('Title')" />
 
-                                            <x-input id="title" class="block mt-1 w-full" type="text" name="j_title"  value="{{$job_with_id->j_title}}" required autofocus />
+                                            <x-input id="title" class="block mt-1 w-full" type="text" name="t_title" value="{{$tasks->t_title}}" required autofocus />
                                         </div>
 
 
-                                        <!-- Jobs Description -->
+                                        <!-- Task Description -->
                                         <div>
                                             <x-label for="description" :value="__('Description')" />
 
-                                            <x-input id="description" class="block mt-1 w-full" type="text" name="j_description"  value="{{$job_with_id->j_description}}"  required />
+                                            <x-input id="description" class="block mt-1 w-full" type="text" name="t_description" value="{{$tasks->t_description}}"  required />
+                                        </div>
+
+
+
+
+
+
+
+
+                                        <!-- User List -->
+                                        <div>
+                                            <x-label for="userlist" :value="__('Assign to')" />
+
+
+                                            <select class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" name="t_a_u_id" required id="userlist">
+                                                @foreach($userlist as $usr)
+                                                    <option value="{{ $usr->id }}"  @if($usr->id == $tasks->t_a_u_id) selected  @endif >{{ $usr->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
 
                                         <div class="flex items-center justify-end mt-4">
                                             <x-button class="ml-3">
-                                                {{ __('Update Job') }}
+                                                {{ __('Update task') }}
                                             </x-button>
                                         </div>
                                     </form>
