@@ -1,0 +1,5 @@
+Create DB in php myadmin by viewing name in .env file
+run migration command
+run laratrust seeder command  php artisan laratrust:seeder
+then register your first user  (Note: This user will be admin by default)
+then register other users and use app
