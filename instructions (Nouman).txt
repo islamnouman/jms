@@ -1,5 +1,8 @@
-Create DB in php myadmin by viewing db name veriable in .env file
-run migration command
-run laratrust seeder command  php artisan laratrust:seeder
-then register your first user  (Note: This user will be admin by default)
-then register other users and use app
+1- create clone of project from gitlab repo (https://gitlab.com/sltech/project-management/)
+2- create a DB
+3- change db name veriable value with new one (that you just created) in .env file in project folder
+3- run migration command (php artisan migrate)
+4- run laratrust seed command (php artisan db:seed)
+5- run app
+6- register first user with admin profile
+7- register second user and so on with simple user profile
