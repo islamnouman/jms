@@ -5,4 +5,4 @@
 4- run laratrust seed command (php artisan db:seed)
 5- run app
 6- register first user with admin profile
-7- register second user and so on with simple user profil
+7- register second user and so on with simple user profile.
